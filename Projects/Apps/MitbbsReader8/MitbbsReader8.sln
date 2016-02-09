@@ -1,9 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MitbbsReader", "MitbbsReader\MitbbsReader.csproj", "{B913A9BB-C2D8-461E-AA16-758318FC1A80}"
 	ProjectSection(ProjectDependencies) = postProject
+		{FA68336A-A330-47A0-99AE-1B0E0953A3BA} = {FA68336A-A330-47A0-99AE-1B0E0953A3BA}
 		{3DA565DD-55B2-422B-B2AB-64E35F926E93} = {3DA565DD-55B2-422B-B2AB-64E35F926E93}
+		{1A1D28E1-0143-497B-95BE-F3B1467D4CB1} = {1A1D28E1-0143-497B-95BE-F3B1467D4CB1}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HAPPhone", "..\..\Common\HAPPhone\HAPPhone.csproj", "{3DA565DD-55B2-422B-B2AB-64E35F926E93}"
@@ -20,10 +24,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7D48A5
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		China Debug|Any CPU = China Debug|Any CPU
 		China Debug|ARM = China Debug|ARM
@@ -174,5 +174,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
