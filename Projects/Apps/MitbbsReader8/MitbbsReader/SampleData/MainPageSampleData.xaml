@@ -1,0 +1,15 @@
+﻿<pages:MainPageData
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:pages="clr-namespace:Naboo.MitbbsReader.Pages" 
+    xmlns:local="clr-namespace:Naboo.MitbbsReader" 
+    >
+
+    <pages:MainPageData.MenuItems>
+        <local:AppMenuLink Name="上次访问" Image="/Images/home_appbar.png" Subtitle="军事天地军事天地军事天地军事天地军事天地军事天地军事天地军事天地军事天地军事天地" HasSubtitle="true"/>
+        <local:AppMenuLink Name="未名空间主页" Image="/Images/home_appbar.png"/>
+        <local:AppMenuLink Name="用户家页" Image="/Images/home_appbar.png"/>
+        <local:AppMenuLink Name="历史收藏" Image="/Images/home_appbar.png"/>
+        <local:AppMenuLink Name="离线内容" Image="/Images/home_appbar.png"/>
+    </pages:MainPageData.MenuItems>
+</pages:MainPageData>

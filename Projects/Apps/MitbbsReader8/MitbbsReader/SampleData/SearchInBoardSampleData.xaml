@@ -1,0 +1,13 @@
+﻿<local:MitbbsSearchInBoard 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Naboo.MitbbsReader" 
+    BoardName="Military"
+    >
+
+    <local:MitbbsSearchInBoard.TopicLinks>
+        <local:MitbbsTopicSearchLink Author="TempBM" IssueDate="Nov 13" Name="joke版精华导读、下载及贴视频方法】2011版"/>
+        <local:MitbbsTopicSearchLink Author="xtxtxttchris" IssueDate="Jul 5" Name="Re: 一棒子拿一棒子打了一棒子一棒子 (转载)"/>
+    </local:MitbbsSearchInBoard.TopicLinks>
+
+</local:MitbbsSearchInBoard>

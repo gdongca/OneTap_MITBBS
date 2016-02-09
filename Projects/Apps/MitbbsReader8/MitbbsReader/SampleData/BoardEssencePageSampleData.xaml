@@ -1,0 +1,13 @@
+﻿<local:MitbbsBoardEssence
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Naboo.MitbbsReader"
+    BoardName="四海为家版"
+    >
+
+  <local:MitbbsBoardEssence.EssenceLinks>
+    <local:MitbbsBoardLinkBase Name="[文章] 在西部，是不是最好看到油站就加一下 "/>
+    <local:MitbbsBoardLinkBase Name="[目录] 堪萨斯的餐馆 - Peppercorn Duck Clu"/>
+  </local:MitbbsBoardEssence.EssenceLinks>
+
+</local:MitbbsBoardEssence>

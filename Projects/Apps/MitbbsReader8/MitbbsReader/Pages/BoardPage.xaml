@@ -1,0 +1,133 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Naboo.MitbbsReader.Pages.BoardPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    d:DataContext="{d:DesignData /SampleData/BoardPageSampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="False"
+    Loaded="PhoneApplicationPage_Loaded"
+    >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--TitlePanel contains the name of the application and page title-->
+            <StackPanel x:Name="TitlePanel" Grid.Row="0" >
+                <toolkit:PerformanceProgressBar x:Name="LoadBoardProgressBar" IsIndeterminate="True" />
+                <Grid>
+                    <TextBlock x:Name="BoardNameTextBlock" Text="{Binding BoardName}" Style="{StaticResource PhoneTextAccentStyle}" Margin="10,0,10,0" FontSize="{StaticResource MitbbsFontSizeText}" DoubleTap="BoardNameTextBlock_DoubleTap"/>
+                    <TextBlock x:Name="BoardLoadingText" Text="" Style="{StaticResource PhoneTextAccentStyle}" Margin="10,0,10,0" FontSize="{StaticResource MitbbsFontSizeText}" Visibility="Collapsed" TextWrapping="Wrap"/>
+                    <Grid HorizontalAlignment="Right" VerticalAlignment="Top">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="ToggleTopArticleText" Text="  + " Foreground="{StaticResource PhoneAccentBrush}" Margin="0,-10,0,0" FontSize="{StaticResource MitbbsFontSizeText}" VerticalAlignment="Top" Visibility="Visible" TextWrapping="NoWrap" Tap="ToggleTopArticleText_Tap" Grid.Column="0"/>
+                        <Border x:Name="OfflineTag" Background="{StaticResource PhoneAccentBrush}" VerticalAlignment="Top" Visibility="Collapsed" Grid.Column="1">
+                            <TextBlock  Text="离线" Foreground="{StaticResource PhoneBackgroundBrush}" FontSize="{StaticResource PhoneFontSizeSmall}"/>
+                        </Border>
+                    </Grid>
+
+                </Grid>
+            </StackPanel>
+
+            <!--ContentPanel - place additional content here-->
+            <ListBox x:Name="TopicLinksListBox" ItemsSource="{Binding TopicLinks}" toolkit:TiltEffect.IsTiltEnabled="True" SelectionChanged="TopicLinksListBox_SelectionChanged" Grid.Row="1" Margin="5,0,5,0">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,6,0,6">
+                            <Grid>
+                                <TextBlock Style="{StaticResource PhoneTextAccentStyle}" Text="{Binding Prefix}" TextWrapping="NoWrap" Grid.Column="0" Margin="0,4,0,0" FontSize="{StaticResource MitbbsFontSizeSmall}"/>
+                                <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="{Binding DisplayTitle}" TextWrapping="Wrap" Grid.Column="1" Margin="0" FontSize="{StaticResource MitbbsFontSizeMediumLarge}" Foreground="{Binding LinkState, Mode=OneWay, Converter={StaticResource LinkStateColorMapper}}"/>
+                            </Grid>
+                            <Grid HorizontalAlignment="Stretch">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="130"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Text="{Binding Author}" Grid.Column="0" TextWrapping="Wrap" FontSize="{StaticResource MitbbsFontSizeNormal}" HorizontalAlignment="Stretch"/>
+                                <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Grid.Column="1" Text="{Binding ReplyCount}" HorizontalAlignment="Right"/>
+                                <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Grid.Column="2" Text="{Binding IssueDate}" HorizontalAlignment="Left"/>
+                            </Grid>
+                            <!--<Grid Visibility="{Binding HasAuthor2, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="335"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                                    <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" FontSize="{StaticResource MitbbsFontSizeNormal}" Text="最后:"/>
+                                    <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" FontSize="{StaticResource MitbbsFontSizeNormal}" Text="{Binding Author2}"/>
+                                </StackPanel>
+                                <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Grid.Column="1" Text="{Binding IssueDate2}"/>
+                            </Grid>-->
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            
+            <Grid Name="AdGrid" Grid.Row="2" HorizontalAlignment="Center">
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="NotificationButton" Grid.Column="0" BorderThickness="0" Margin="0,0,0,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ImageButton}" Height="50" Width="50" Click="NotificationButton_Click" Visibility="{Binding HasNotification, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}">
+                <ImageBrush ImageSource="/Images/new_appbar.png" Stretch="None"/>
+            </Button>
+            <Button x:Name="DownloadStatusButton" Grid.Column="1" BorderThickness="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ImageButton}" Height="50" Width="50" Click="DownloadStatusButton_Click" Visibility="{Binding IsDownloading, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}">
+                <ImageBrush ImageSource="/Images/download_appbar.png" Stretch="None"/>
+            </Button>
+        </Grid>
+
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="RefreshButton" IconUri="/Images/refresh_appbar.png" Text="刷新" Click="RefreshButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="PrevPageButton" IconUri="/Images/left_appbar.png" Text="上页" Click="PrevPageButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="NextPageButton" IconUri="/Images/right_appbar.png" Text="下页" Click="NextPageButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="SearchButton" IconUri="/Images/search_appbar.png" Text="搜索" Click="SearchButton_Click_1"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="NewPostMenu" Text="发表文章" Click="NewPostMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="FirstPageMenu" Text="首页" Click="FirstPageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="LastPageMenu" Text="末页" Click="LastPageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="BoardPageMenu" Text="版面" Click="BoardPageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="CollectionPageMenu" Text="文摘区" Click="CollectionPageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="ReservedPageMenu" Text="保留区" Click="ReservedPageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="EssensePageMenu" Text="精华区" Click="EssensePageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="BookmarkMenu" Text="加入书签" Click="BookmarkMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="DownloadMenu" Text="下载" Click="DownloadMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="SettingMenu" Text="设置" Click="SettingMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="FeedbackMenu" Text="反馈问题" Click="FeedbackMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="OpenInBrowserMenu" Text="open in browser" Click="OpenInBrowserMenu_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

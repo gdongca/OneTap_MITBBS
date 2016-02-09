@@ -1,0 +1,14 @@
+﻿<local:MitbbsClubGroupAllPages
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"       
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Naboo.MitbbsReader" 
+    ClubGroupName="财经类俱乐部"
+    >
+
+    <local:MitbbsClubGroupAllPages.ClubLinks>
+        <local:MitbbsClubLink Name="麻省房贷和房地产(MA_Mortgage_Realestate)"/>
+        <local:MitbbsClubLink Name="西雅图贷款买房(SeattleMortgageRealty)"/>
+        <local:MitbbsClubLink Name="Quant书吧_Shreve(QuantClub_Shreve)"/>
+    </local:MitbbsClubGroupAllPages.ClubLinks>
+
+</local:MitbbsClubGroupAllPages>

@@ -1,0 +1,182 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Naboo.MitbbsReader.Pages.SettingPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False"
+    Loaded="PhoneApplicationPage_Loaded"
+    >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <!--Pivot Control-->
+            <controls:Pivot x:Name="PivotControl" Title="一网无际•未名空间•设置" Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}">
+                <!--Pivot item one-->
+                <controls:PivotItem Header="站点">
+                    <ListBox x:Name="SiteListBox" Margin="10, 10, 10, 10">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical" Margin="12,0,0,10">
+                                    
+                                    <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontSize="{StaticResource PhoneFontSizeLarge}" />
+                                    <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" FontSize="{StaticResource MitbbsFontSizeNormal}" Text="{Binding Description}" Margin="0,0,0,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </controls:PivotItem>
+                <controls:PivotItem Header="账号">
+                    <Grid>
+                        <ScrollViewer>
+                            <StackPanel x:Name="LogOnPanel" Margin="0, 0, 0, 0">
+                                <StackPanel Orientation="Horizontal" Margin="10, 0, 10, 0">
+                                    <Button Name="AddUserButton" BorderThickness="0" Margin="0" Padding="0" HorizontalAlignment="Left" VerticalAlignment="Center" Tag="{Binding BindsDirectlyToSource=True}" Style="{StaticResource ImageButton}" Height="73" Width="73" Grid.Column="0" Click="AddUserButton_Click">
+                                        <ImageBrush ImageSource="/MitbbsReader;component/Images/add_roundbutton.png" Stretch="None"/>
+                                    </Button>
+                                    <TextBlock Text="添加账号" Style="{StaticResource PhoneTextSubtleStyle}" VerticalAlignment="Center" FontSize="{StaticResource PhoneFontSizeMediumLarge}"/>
+                                </StackPanel>
+
+                                <ListBox x:Name="UserListBox" ScrollViewer.VerticalScrollBarVisibility="Disabled" Margin="10, 10, 10, 10" SelectionChanged="UserListBox_SelectionChanged">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Grid Height="50" Width="70">
+                                                    <Rectangle HorizontalAlignment="Center" Height="48" Width="48" Fill="{StaticResource PhoneForegroundBrush}" Visibility="{Binding IsDefault, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}" VerticalAlignment="Center">
+                                                        <Rectangle.OpacityMask>
+                                                            <ImageBrush Stretch="None" ImageSource="/Images/check_appbar.png" />
+                                                        </Rectangle.OpacityMask>
+                                                    </Rectangle>
+                                                </Grid>
+                                                <TextBlock Text="{Binding DisplayName}" VerticalAlignment="Center" FontSize="{StaticResource PhoneFontSizeLarge}" Margin="12,0,0,0"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+                                <Border x:Name="UserEditPanel" Margin="10, 10, 10, 10" BorderThickness="2" BorderBrush="{StaticResource PhoneAccentBrush}" CornerRadius="2" Visibility="Collapsed">
+                                    <StackPanel >
+                                        <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" FontSize="{StaticResource PhoneFontSizeNormal}">用户名：</TextBlock>
+                                        <TextBox x:Name="UsernameTextBox" TextChanged="UsernameTextBox_TextChanged"/>
+                                        <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" FontSize="{StaticResource PhoneFontSizeNormal}">密码：</TextBlock>
+                                        <PasswordBox x:Name="PasswordTextBox" />
+                                        <StackPanel Orientation="Horizontal">
+                                            <Button x:Name="LogOnButton" Content="登录" Width="120" Margin="10" Click="LogOnButton_Click"/>
+                                            <Button x:Name="SaveUserButton" Content="保存" Width="120" Margin="10" Click="SaveUserButton_Click"/>
+                                            <Button x:Name="DeleteUserButton" Content="删除" Width="120" Margin="10" Click="DeleteUserButton_Click"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </controls:PivotItem>
+
+                <controls:PivotItem Header="显示">
+                    <Grid>
+                        <ScrollViewer>
+                            <StackPanel Margin="0">
+                                <toolkit:ToggleSwitch Header="显示系统顶栏" Name="SystemTraySwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="隐藏底部按钮" Name="MiniAppbarSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="屏幕方向" Margin="10, 20, 120, 10" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneBorderBrush}"/>
+                                    <toolkit:ListPicker Name="OrientationPicker" Width="200" >
+                                        <toolkit:ListPickerItem Content="自动"/>
+                                        <toolkit:ListPickerItem Content="纵向"/>
+                                        <toolkit:ListPickerItem Content="横向"/>
+                                    </toolkit:ListPicker>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="背景颜色" Margin="10, 20, 120, 10" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneBorderBrush}"/>
+                                    <toolkit:ListPicker Name="ThemePicker" Width="200">
+                                        <toolkit:ListPickerItem Content="自动"/>
+                                        <toolkit:ListPickerItem Content="深色"/>
+                                        <toolkit:ListPickerItem Content="浅色"/>
+                                    </toolkit:ListPicker>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="字体大小" Margin="10, 20, 120, 10" FontSize="{StaticResource PhoneFontSizeNormal}" Foreground="{StaticResource PhoneBorderBrush}"/>
+                                    <toolkit:ListPicker Name="FontSizePicker" Width="200" >
+                                        <toolkit:ListPickerItem Content="小号"/>
+                                        <toolkit:ListPickerItem Content="中号"/>
+                                        <toolkit:ListPickerItem Content="大号"/>
+                                    </toolkit:ListPicker>
+                                </StackPanel>
+                                <Grid Margin="0,50,0,50"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </controls:PivotItem>
+
+                <controls:PivotItem Header="阅读">
+                    <Grid>
+                        <ScrollViewer>
+                            <StackPanel Margin="0">
+                                <toolkit:ToggleSwitch Header="浏览历史" Name="ReadingHistorySwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="记忆阅读位置" Name="RestoreLastVisitSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="隐藏置顶文章" Name="HideTopSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="隐藏文章引用" Name="HideQuoteSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </controls:PivotItem>
+
+                <controls:PivotItem Header="任务">
+                    <Grid>
+                        <ScrollViewer>
+                            <StackPanel Margin="0">
+                                <toolkit:ToggleSwitch Header="自动检查邮件和关注文章更新" Name="AutoCheckSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="自动开始下载" Name="AutoDownloadSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="只在WiFi连接时下载" Name="WifiDownloadOnlySwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="预先读取" Name="PreloadSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </controls:PivotItem>
+                
+                <controls:PivotItem Header="其它">
+                    <Grid>
+                        <ScrollViewer>
+                            <StackPanel Margin="0">
+                                <toolkit:ToggleSwitch Header="显示广告" Name="AdSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" Click="AdSwitch_Click" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="广告中使用位置信息" Name="UseLocationSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <toolkit:ToggleSwitch Header="发贴中加入本软件信息" Name="AppendSentFromSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left" Click="AppendSentFromSwitch_Click"/>
+                                <toolkit:ToggleSwitch Header="发送匿名使用统计" Name="ShareInfoSwitch" Width="456" FontSize="{StaticResource PhoneFontSizeLarge}" HorizontalAlignment="Left"/>
+                                <Grid Margin="0,50,0,50"/>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+                </controls:PivotItem>
+            </controls:Pivot>
+
+            <Grid Name="AdGrid" Grid.Row="2" HorizontalAlignment="Center" Visibility="Collapsed">
+                <my:AdControl Height="80" HorizontalAlignment="Left" Margin="0,0,0,0" Name="AdControl" VerticalAlignment="Top" Width="480" ApplicationId="cd40ad3c-3229-402a-9beb-27d8f8fe17cb" AdUnitId="68836" />
+            </Grid>
+        </Grid>
+        <Rectangle x:Name="DisableRect" Margin="0" Fill="#80000000" Visibility="Collapsed" />
+        <toolkit:PerformanceProgressBar x:Name="LogOnProgressBar" IsIndeterminate="True" Margin="0, 0, 0, 0" Visibility="Collapsed" VerticalAlignment="Center"/>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="SaveButton" IconUri="/Images/save_appbar.png" Text="保存" Click="SaveButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="CloseButton" IconUri="/Images/close_appbar.png" Text="取消" Click="CloseButton_Click"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

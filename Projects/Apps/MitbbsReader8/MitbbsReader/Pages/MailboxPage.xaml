@@ -1,0 +1,80 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Naboo.MitbbsReader.Pages.MailboxPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    d:DataContext="{d:DesignData /SampleData/MailboxPageSampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="False"
+    Loaded="PhoneApplicationPage_Loaded"
+    >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="0" >
+            <toolkit:PerformanceProgressBar x:Name="LoadMailboxProgressBar" IsIndeterminate="True" />
+            <Grid>
+                <TextBlock x:Name="MailboxNameTextBlock" Text="{Binding MailboxName}" Style="{StaticResource PhoneTextAccentStyle}" Margin="10,0,10,0" FontSize="{StaticResource MitbbsFontSizeText}"/>
+                <TextBlock x:Name="MailboxLoadingText" Text="正在读取邮箱..." Style="{StaticResource PhoneTextAccentStyle}" Margin="10,0,10,0" FontSize="{StaticResource MitbbsFontSizeText}" Visibility="Collapsed" TextWrapping="Wrap"/>
+            </Grid>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <ListBox x:Name="MailLinksListBox" ItemsSource="{Binding MailLinks}" SelectionChanged="MailLinksListBox_SelectionChanged" Margin="5,0,5,0"  Grid.Row="1" toolkit:TiltEffect.IsTiltEnabled="True">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,6,0,6">
+                        <Grid>
+                            <TextBlock Style="{StaticResource PhoneTextAccentStyle}" Text="{Binding Prefix}" TextWrapping="NoWrap" Margin="0,7,0,0" FontSize="{StaticResource MitbbsFontSizeNormal}"/>
+                            <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="{Binding DisplayTitle}" TextWrapping="Wrap" Margin="0" FontSize="{StaticResource MitbbsFontSizeLarge}" Foreground="{Binding LinkState, Mode=OneWay, Converter={StaticResource LinkStateColorMapper}}"/>
+                        </Grid>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="320"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Grid.Column="0" FontSize="{StaticResource MitbbsFontSizeNormal}" Text="{Binding AuthorOrRecipient}"/>
+                            <TextBlock Style="{StaticResource PhoneTextSubtleStyle}" Grid.Column="1" Text="{Binding Date}"/>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+      
+        <Grid Name="AdGrid" Grid.Row="2" HorizontalAlignment="Center">
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="RefreshButton" IconUri="/Images/refresh_appbar.png" Text="刷新" Click="RefreshButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="PrevPageButton" IconUri="/Images/left_appbar.png" Text="上页" Click="PrevPageButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="NextPageButton" IconUri="/Images/right_appbar.png" Text="下页" Click="NextPageButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="NewMailButton" IconUri="/Images/add_appbar.png" Text="写邮件" Click="NewMailButton_Click"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="FirstPageMenu" Text="首页" Click="FirstPageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="LastPageMenu" Text="末页" Click="LastPageMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="SettingMenu" Text="设置" Click="SettingMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="FeedbackMenu" Text="反馈问题" Click="FeedbackMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="OpenInBrowserMenu" Text="open in browser" Click="OpenInBrowserMenu_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

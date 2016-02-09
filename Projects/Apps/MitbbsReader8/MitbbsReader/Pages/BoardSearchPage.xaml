@@ -1,0 +1,76 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Naboo.MitbbsReader.Pages.BoardSearchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="False"
+    Loaded="PhoneApplicationPage_Loaded"
+    >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <toolkit:PerformanceProgressBar x:Name="SearchProgressBar" IsIndeterminate="True" Visibility="{Binding Updating, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}"/>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel x:Name="TitlePanel" Grid.Row="1">
+            <TextBlock x:Name="PageTitle" Text="搜索版面和俱乐部" Margin="10,0,10,0" Style="{StaticResource PhoneTextAccentStyle}" FontSize="{StaticResource MitbbsFontSizeText}"/>
+            <Grid x:Name="SearchPanel" Margin="5,0,5,0">
+                <Border BorderThickness="2" CornerRadius="3" BorderBrush="{StaticResource PhoneAccentBrush}">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="版面名称:" Grid.Column="0" VerticalAlignment="Center" FontSize="{StaticResource MitbbsFontSizeMedium}" Margin="10,0,0,0"/>
+                            <TextBox x:Name="SearchTextBox" Grid.Column="1" TextChanged="SearchTextBox_TextChanged" InputScope="Text"/>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+        <ListBox x:Name="BoardLinkListBox" ItemsSource="{Binding ResultBoardLinks}" SelectionChanged="BoardLinkListBox_SelectionChanged" Margin="10,5,10,0" Grid.Row="2" toolkit:TiltEffect.IsTiltEnabled="True">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0,8,0,8">
+                        <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="{Binding Name}" TextWrapping="NoWrap" FontSize="{StaticResource MitbbsFontSizeLarge}" Foreground="{Binding LinkState, Mode=OneWay, Converter={StaticResource LinkStateColorMapper}}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <Border Grid.Row="2" Name="PopUpMessageBox" Width="200" Height="70" BorderThickness="2" CornerRadius="4" BorderBrush="{StaticResource PhoneAccentBrush}" Background="{StaticResource PhoneBackgroundBrush}" VerticalAlignment="Top" Margin="50" Visibility="{Binding ShowUpdateProgress, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource PhoneTextLargeStyle}">正在搜索...</TextBlock>
+        </Border>
+        
+        <Grid Name="AdGrid" Grid.Row="3" HorizontalAlignment="Center">
+        </Grid>
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="CloseButton" IconUri="/Images/close_appbar.png" Text="返回" Click="CloseButton_Click"/>
+
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>

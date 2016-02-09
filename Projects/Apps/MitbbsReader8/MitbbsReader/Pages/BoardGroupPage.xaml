@@ -1,0 +1,83 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="Naboo.MitbbsReader.Pages.BoardGroupPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:my="clr-namespace:Microsoft.Advertising.Mobile.UI;assembly=Microsoft.Advertising.Mobile.UI"
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
+    d:DataContext="{d:DesignData /SampleData/BoardGroupPageSampleData.xaml}"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="PortraitOrLandscape" Orientation="Portrait"
+    mc:Ignorable="d" d:DesignHeight="728" d:DesignWidth="480"
+    shell:SystemTray.IsVisible="False"
+    Loaded="PhoneApplicationPage_Loaded"
+    >
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!--TitlePanel contains the name of the application and page title-->
+            <StackPanel x:Name="TitlePanel" Grid.Row="0">
+                <toolkit:PerformanceProgressBar x:Name="LoadBoardGroupProgressBar" IsIndeterminate="True" />
+                <Grid>
+                    <TextBlock x:Name="BoardGroupNameTextBlock" Text="{Binding BoardGroupName}" Style="{StaticResource PhoneTextAccentStyle}" Margin="10,0,10,0" FontSize="{StaticResource MitbbsFontSizeText}"/>
+                    <TextBlock x:Name="BoardGroupLoadingText" Text="" Style="{StaticResource PhoneTextAccentStyle}" Margin="10,0,10,0" FontSize="{StaticResource MitbbsFontSizeText}" Visibility="Collapsed" TextWrapping="Wrap"/>
+                </Grid>
+            </StackPanel>
+
+            <!--ContentPanel - place additional content here-->
+            <ListBox x:Name="BoardLinkListBox" ItemsSource="{Binding BoardLinks}" SelectionChanged="BoardLinkListBox_SelectionChanged" Margin="10,0,10,0" Grid.Row="1" toolkit:TiltEffect.IsTiltEnabled="True">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="0,8,0,8">
+                            <TextBlock Style="{StaticResource PhoneTextTitle2Style}" Text="{Binding Name}" TextWrapping="NoWrap" FontSize="{StaticResource MitbbsFontSizeLarge}" Foreground="{Binding LinkState, Mode=OneWay, Converter={StaticResource LinkStateColorMapper}}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Grid Name="AdGrid" Grid.Row="2" HorizontalAlignment="Center">
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,0,0">
+            <Grid.ColumnDefinitions >
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="NotificationButton" Grid.Column="0" BorderThickness="0" Margin="0,0,0,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ImageButton}" Height="50" Width="50" Click="NotificationButton_Click" Visibility="{Binding HasNotification, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}">
+                <ImageBrush ImageSource="/Images/new_appbar.png" Stretch="None"/>
+            </Button>
+            <Button x:Name="DownloadStatusButton" Grid.Column="1" BorderThickness="0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource ImageButton}" Height="50" Width="50" Click="DownloadStatusButton_Click" Visibility="{Binding IsDownloading, Mode=OneWay, Converter={StaticResource VisibilityStateMapper}}">
+                <ImageBrush ImageSource="/Images/download_appbar.png" Stretch="None"/>
+            </Button>
+        </Grid>
+        
+    </Grid>
+
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="RefreshButton" IconUri="/Images/refresh_appbar.png" Text="刷新" Click="RefreshButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="SearchButton" IconUri="/Images/search_appbar.png" Text="搜索" Click="SearchButton_Click"/>
+            <shell:ApplicationBarIconButton x:Name="CloseButton" IconUri="/Images/close_appbar.png" Text="返回" Click="CloseButton_Click"/>
+
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="SettingMenu" Text="设置" Click="SettingMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="FeedbackMenu" Text="反馈问题" Click="FeedbackMenu_Click"/>
+                <shell:ApplicationBarMenuItem x:Name="OpenInBrowserMenu" Text="open in browser" Click="OpenInBrowserMenu_Click"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
+
+</phone:PhoneApplicationPage>
