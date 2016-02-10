@@ -7,7 +7,7 @@ OneTap_MITBBS
 
 2. Install Windows Phone 8.1 SDK
 
-These semem to be all available through this link:
+These seem to be all available through this link:
 
 https://dev.windows.com/en-us/downloads/sdk-archive
 
