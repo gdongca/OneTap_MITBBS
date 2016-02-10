@@ -3,8 +3,9 @@ OneTap_MITBBS
 
 - Set up dev environment
 
-Install Visual Studio 2012 or newer
-Install Windows Phone 8.1 SDK
+1. Install Visual Studio 2012 or newer
+
+2. Install Windows Phone 8.1 SDK
 
 These semem to be all available through this link:
 
