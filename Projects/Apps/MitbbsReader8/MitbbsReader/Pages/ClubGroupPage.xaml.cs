@@ -148,8 +148,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.InitAdControl(AdGrid);
-
             var parameters = NavigationContext.QueryString;
 
             if (parameters.ContainsKey("Url"))
@@ -220,8 +218,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 return;
             }
-
-            PageHelper.CleanupAdControl(AdGrid);
 
             State["Url"] = _url;
 

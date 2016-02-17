@@ -50,8 +50,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.InitAdControl(AdGrid);
-
             if (App.ForceRefreshContent)
             {
                 _forceRefresh = true;
@@ -120,8 +118,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 return;
             }
-
-            PageHelper.CleanupAdControl(AdGrid);
 
             base.OnNavigatedFrom(e);
         }
@@ -449,7 +445,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _topic.NextPageUrl;
                 LoadTopic(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -459,7 +454,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _topic.PrevPageUrl;
                 LoadTopic(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -469,7 +463,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _topic.FirstPageUrl;
                 LoadTopic(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -479,7 +472,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _topic.LastPageUrl;
                 LoadTopic(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 

@@ -177,8 +177,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.InitAdControl(AdGrid);
-
             var parameters = NavigationContext.QueryString;
 
             if (parameters.ContainsKey("Url"))
@@ -239,8 +237,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.CleanupAdControl(AdGrid);
-
             State.Clear();
 
             State["Url"] = _url;
@@ -295,7 +291,6 @@ namespace Naboo.MitbbsReader.Pages
                         {
                             _scrollOffset = lastUrl.ScrollOffset;
                             LoadBoard();
-                            PageHelper.RefreshAdControl(AdGrid);
                         }
                         else
                         {
@@ -308,7 +303,6 @@ namespace Naboo.MitbbsReader.Pages
                     {
                         _scrollOffset = lastUrl.ScrollOffset;
                         LoadBoard();
-                        PageHelper.RefreshAdControl(AdGrid);
                     }
 
                     return true;

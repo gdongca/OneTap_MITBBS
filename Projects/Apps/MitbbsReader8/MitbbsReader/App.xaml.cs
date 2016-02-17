@@ -70,12 +70,7 @@ namespace Naboo.MitbbsReader
         };
 
         public static Dictionary<String, String> DeveloperUserNames = new Dictionary<string, string>();
-
-        public static AdHelper AdHelper = new AdHelper(
-                                                License,
-                                                () => App.Settings != null ? App.Settings.UseLocationForAds : false
-                                                );
-
+        
         public static AppInfo TheAppInfo = new AppInfo(System.Reflection.Assembly.GetExecutingAssembly(), License);
 
         private bool wasRelaunched = false;
@@ -97,26 +92,7 @@ namespace Naboo.MitbbsReader
             // Initialize image tools 
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Bmp.BmpDecoder>();
             ImageTools.IO.Decoders.AddDecoder<ImageTools.IO.Gif.GifDecoder>();
-
-            AdHelper.AdControlTemplate = new AdRotator.AdRotatorControl()
-            {
-                DefaultSettingsFileUri = new Uri(@"/MitbbsReader;component/defaultAdSettings.xml", UriKind.Relative),
-#if DEBUG
-                SettingsUrl = @"http://dl.dropbox.com/u/16498469/ProjectNaboo/MitbbsReaderAdSettingsTest.xml",
-                PubCenterAdUnitId = "81994",
-                AdMobAdUnitId = "a14f37265e89cc3",
-                InneractiveAppId = "ProjectNABOO_OneTapMITBBSReaderTest_WP7",
-#else
-                SettingsUrl = @"http://dl.dropbox.com/u/16498469/ProjectNaboo/MitbbsReaderAdSettings.xml",
-                PubCenterAdUnitId = "68836",
-                AdMobAdUnitId = "a14f17c359ca2af",
-                InneractiveAppId = "PorjectNABOO_OneTapMITBBSReader_WP7",
-#endif
-                DefaultAdType = AdRotator.AdType.PubCenter,
-                PubCenterAppId = "cd40ad3c-3229-402a-9beb-27d8f8fe17cb",
-                AdDuplexAppId = "6831"
-            };
-
+            
             DeveloperUserNames.Add("onetap", "onetap");
             
             // Show graphics profiling information while debugging.
@@ -175,8 +151,6 @@ namespace Naboo.MitbbsReader
                 Settings = new MitbbsSettings();
             }
 
-            AdHelper.LastTapTime = Settings.LastAdTapTime;
-
             //if (Settings.LogOn)
             //{
             //    //WebSession.LogInCompleted += OnLogOnCompleted;
@@ -197,7 +171,6 @@ namespace Naboo.MitbbsReader
 
         private void SaveSettings()
         {
-            Settings.LastAdTapTime = AdHelper.LastTapTime;
             Settings.SaveToStorage();
 
             MitbbsBoardSearch.Instance.SaveToStorage();

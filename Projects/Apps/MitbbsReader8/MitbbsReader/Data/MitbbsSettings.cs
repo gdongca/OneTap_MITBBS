@@ -926,7 +926,7 @@ namespace Naboo.MitbbsReader
                 //    StorageHelper.SaveObject("reading_history.xml", ReadingHistory);
                 //}
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
@@ -981,7 +981,7 @@ namespace Naboo.MitbbsReader
 
                 mainData.OfflineContentManager.CompactContentList();
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }

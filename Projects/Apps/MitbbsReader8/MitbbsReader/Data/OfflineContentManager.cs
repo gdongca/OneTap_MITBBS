@@ -48,7 +48,7 @@ namespace Naboo.MitbbsReader
 
                 return true;
             }
-            catch(Exception e)
+            catch(Exception)
             {
 
             }
@@ -99,7 +99,7 @@ namespace Naboo.MitbbsReader
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
@@ -138,7 +138,7 @@ namespace Naboo.MitbbsReader
 
                 return true;
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -163,7 +163,7 @@ namespace Naboo.MitbbsReader
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
 
             }
@@ -182,7 +182,7 @@ namespace Naboo.MitbbsReader
                     return isoStorage.FileExists(filename);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -198,7 +198,7 @@ namespace Naboo.MitbbsReader
                     return isoStorage.DirectoryExists(GenerateOfflineRootFolderName(rootID));
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -222,7 +222,7 @@ namespace Naboo.MitbbsReader
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
 
@@ -246,7 +246,7 @@ namespace Naboo.MitbbsReader
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
             }
         }

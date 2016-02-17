@@ -327,25 +327,6 @@ namespace Naboo.MitbbsReader.Pages
             return false;
         }
 
-        public static void InitAdControl(Grid adGrid)
-        {
-            App.Track("Statistics", "AdImpression", null);
-            App.AdHelper.InitAdControl(adGrid);
-        }
-
-        public static void CleanupAdControl(Grid adGrid)
-        {
-            App.AdHelper.CleanupAdControl(adGrid);
-        }
-
-        public static void RefreshAdControl(Grid adGrid)
-        {
-            if (App.AdHelper.RefreshAdControl(adGrid))
-            {
-                App.Track("Statistics", "AdImpression", null);
-            }
-        }
-
         public static  String GetBoardName(this MitbbsLink link)
         {
             String boardNameTemplate = @"(?<1>.*)\((?<2>.*)\)";

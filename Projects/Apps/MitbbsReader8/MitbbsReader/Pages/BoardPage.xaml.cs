@@ -254,8 +254,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.InitAdControl(AdGrid);
-
             if (App.ForceRefreshContent)
             {
                 _forceRefresh = true;
@@ -376,8 +374,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.CleanupAdControl(AdGrid);
-
             State["Url"] = _url;
 
             if (_board != null && _board.IsLoaded)
@@ -407,7 +403,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _board.PrevPageUrl;
                 LoadBoard(false);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -417,7 +412,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _board.NextPageUrl;
                 LoadBoard(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -427,7 +421,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _board.FirstPageUrl;
                 LoadBoard(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -437,7 +430,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _board.LastPageUrl;
                 LoadBoard(false);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -469,7 +461,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _board.CollectionPageUrl;
                 LoadBoard(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -479,7 +470,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _board.BoardPageUrl;
                 LoadBoard(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -489,7 +479,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _board.ReservePageUrl;
                 LoadBoard(true);
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 

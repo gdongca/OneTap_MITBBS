@@ -38,8 +38,6 @@ namespace Naboo.MitbbsReader.Pages
 
             App.Settings.CurrentSessionHistory.SetLastPageName(NavigationService, "搜索版面和俱乐部");
 
-            PageHelper.InitAdControl(AdGrid);
-
             var parameters = NavigationContext.QueryString;
 
             if (parameters.ContainsKey("FileId"))
@@ -80,8 +78,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 return;
             }
-
-            PageHelper.CleanupAdControl(AdGrid);
 
             State["SearchKey"] = _boardSearch.SearchKeyword;
 

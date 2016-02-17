@@ -1152,7 +1152,7 @@ namespace Naboo.MitbbsReader.Pages
                                 scrollViewer.ScrollToVerticalOffset(scrollViewer.VerticalOffset + (scrollViewer.ActualHeight - 60));
                             }
                         }
-                        catch (Exception ex)
+                        catch (Exception)
                         {
                         }
                     },

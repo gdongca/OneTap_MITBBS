@@ -52,8 +52,6 @@ namespace Naboo.MitbbsReader.Pages
 
             App.Settings.CurrentSessionHistory.SetLastPageName(NavigationService, "精华区文章");
 
-            PageHelper.InitAdControl(AdGrid);
-
             if (App.ForceRefreshContent)
             {
                 _forceRefresh = true;
@@ -77,7 +75,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.CleanupAdControl(AdGrid);
             base.OnNavigatedFrom(e);
         }
 

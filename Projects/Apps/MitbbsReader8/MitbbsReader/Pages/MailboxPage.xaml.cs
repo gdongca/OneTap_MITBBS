@@ -165,8 +165,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.InitAdControl(AdGrid);
-
             var parameters = NavigationContext.QueryString;
 
             if (parameters.ContainsKey("Url"))
@@ -216,8 +214,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.CleanupAdControl(AdGrid);
-
             State["Url"] = _url;
 
             if (_mailbox.IsLoaded)
@@ -247,7 +243,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _mailbox.PrevPageUrl;
                 LoadMailbox();
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -257,7 +252,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _mailbox.NextPageUrl;
                 LoadMailbox();
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -267,7 +261,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _mailbox.FirstPageUrl;
                 LoadMailbox();
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 
@@ -277,7 +270,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 _url = _mailbox.LastPageUrl;
                 LoadMailbox();
-                PageHelper.RefreshAdControl(AdGrid);
             }
         }
 

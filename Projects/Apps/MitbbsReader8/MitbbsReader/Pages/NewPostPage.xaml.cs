@@ -69,8 +69,6 @@ namespace Naboo.MitbbsReader.Pages
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            PageHelper.InitAdControl(AdGrid);
-
             var parameters = NavigationContext.QueryString;
 
             if (parameters.ContainsKey("FullPage"))
@@ -200,8 +198,6 @@ namespace Naboo.MitbbsReader.Pages
 
         protected override void OnNavigatedFrom(System.Windows.Navigation.NavigationEventArgs e)
         {
-            PageHelper.CleanupAdControl(AdGrid);
-
             State.Clear();
 
             State["Url"] = _url;

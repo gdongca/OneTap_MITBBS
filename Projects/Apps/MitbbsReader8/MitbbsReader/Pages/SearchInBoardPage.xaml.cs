@@ -40,8 +40,6 @@ namespace Naboo.MitbbsReader.Pages
                 return;
             }
 
-            PageHelper.InitAdControl(AdGrid);
-            
             var parameters = NavigationContext.QueryString;
 
             if (parameters.ContainsKey("BoardName"))
@@ -83,8 +81,6 @@ namespace Naboo.MitbbsReader.Pages
             {
                 return;
             }
-
-            PageHelper.CleanupAdControl(AdGrid);
 
             State["Title"] = TitleTextBox.Text;
             State["Author"] = AuthorTextBox.Text;
@@ -161,8 +157,6 @@ namespace Naboo.MitbbsReader.Pages
             _search.BoardName = _boardName;
             _search.IsClub = _club;
             _search.StartSearch(App.WebSession.CreateWebClient());
-
-            PageHelper.RefreshAdControl(AdGrid);
         }
 
         private void OnSearchCompleted(object sender, DataLoadedEventArgs args)

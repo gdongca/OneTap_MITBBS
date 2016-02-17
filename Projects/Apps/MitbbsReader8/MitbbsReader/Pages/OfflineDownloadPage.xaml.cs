@@ -32,8 +32,6 @@ namespace Naboo.MitbbsReader.Pages
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
-            PageHelper.InitAdControl(AdGrid);
-
             var parameters = NavigationContext.QueryString;
 
             String _url = null;
