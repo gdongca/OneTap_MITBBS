@@ -30,9 +30,9 @@ namespace Naboo.MitbbsReader
         private CookieContainer _cookies = new CookieContainer();
         private HtmlWeb _web = new HtmlWeb();
 
-        private String _logInStartPageUrl = "/mobile/mlogin.php";
-        private String _logInPageUrl = "/mobile/mlogin.php";
-        private String _logOutPageUrl = "/mobile/mlogin.php?ac=logout";
+        private String _logInStartPageUrl = "/mwap/home/index.php";
+        private String _logInPageUrl = "/mwap/login.php";
+        private String _logOutPageUrl = "/mwap/login.php?ac=logout";
 
         private Gb2312Encoding _encoding = new Gb2312Encoding();
         private uint _retries = 0;
@@ -173,7 +173,7 @@ namespace Naboo.MitbbsReader
             if ((args.Document != null) && (_web.FormElements.ContainsKey("id")))
             {
                 _web.FormElements["id"] = _username;
-                _web.FormElements["pwd"] = _password;
+                _web.FormElements["passwd"] = _password;
                 _web.LoadCompleted += OnLogInPageLoaded;
                 _web.LoadAsync(App.Settings.BuildUrl(_logInPageUrl), HtmlWeb.OpenMode.Post);
             }
@@ -234,11 +234,11 @@ namespace Naboo.MitbbsReader
 
             if (args.Document != null)
             {
-                IEnumerable<HtmlNode> titleNodes = args.Document.DocumentNode.Descendants("title");
-                foreach (HtmlNode titleNode in titleNodes)
+                IEnumerable<HtmlNode> textNodes = args.Document.DocumentNode.Descendants("#text");
+                foreach (HtmlNode textNode in textNodes)
                 {
-                    String title = HtmlUtilities.GetPlainHtmlText(titleNode.InnerText);
-                    if (title.EndsWith("家页"))
+                    String text = HtmlUtilities.GetPlainHtmlText(textNode.InnerText);
+                    if (text!=null && text.Contains("家页"))
                     {
                         logInCompleteArgs.Success = true;
                         IsLoggedIn = true;
