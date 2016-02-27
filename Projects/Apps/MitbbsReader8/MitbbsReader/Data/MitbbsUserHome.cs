@@ -14,12 +14,15 @@ using System.Windows.Shapes;
 using System.Xml.Serialization;
 using HtmlAgilityPack;
 using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace Naboo.MitbbsReader
 {
     public class MitbbsUserHome
     {
-        public static String MitbbsMobileUserHomeUrl = "/mobile/mkjjy.php";
+        //public static String MitbbsMobileUserHomeUrl = "/mobile/mkjjy.php";
+        public static String MitbbsMobileUserHomeUrl = "/mwap/home/index.php";
+        public static String MitbbsMobileUserHomeRootUrl = "/mwap/home/";
 
         public String Url { get; set; }
         public String MailboxUrl { get; set; }
@@ -119,58 +122,60 @@ namespace Naboo.MitbbsReader
 
             try
             {
-                IEnumerable<HtmlNode> divNodes = rootNode.Descendants("div");
-                foreach (HtmlNode divNode in divNodes)
+                var divNodes = rootNode.Descendants("div");
+                foreach (var divNode in divNodes)
                 {
-                    if (divNode.Attributes["id"].Value == "wenzhangyudu")
+                    if (divNode.Attributes["class"].Value == "jy")
                     {
-                        HtmlNodeCollection liNodes = divNode.ChildNodes[1].ChildNodes;
-                        for (int i = 0; i < liNodes.Count; i++)
+                        var ulNodes = divNode.Descendants("ul");
+                        foreach (var ulNode in ulNodes)
                         {
-                            HtmlNode liNode = liNodes[i];
-                            if (liNode.Name == "li")
+                            if (ulNode.GetAttributeValue("class", "").Contains("jy_group"))
                             {
-                                String bText = "";
-                                IEnumerable<HtmlNode> bNodes = liNode.Descendants("b");
-                                foreach (HtmlNode bNode in bNodes)
+                                foreach (var liNode in ulNode.ChildNodes)
                                 {
-                                    bText = HtmlUtilities.GetPlainHtmlText(bNode.FirstChild.InnerText);
-                                    break;
-                                }
-
-                                IEnumerable<HtmlNode> linkNodes = liNode.Descendants("a");
-
-                                foreach (HtmlNode linkNode in linkNodes)
-                                {
-                                    String linkText = HtmlUtilities.GetPlainHtmlText(linkNode.FirstChild.InnerText);
-
-                                    if (linkText == "站内邮箱")
+                                    if (liNode.Name == "li")
                                     {
-                                        MailboxUrl = linkNode.Attributes["href"].Value;
-                                        isUserHomeLoaded = true;
-                                    }
-                                    else if(bText != "")
-                                    {
-                                        if (bText == "我的讨论区：")
+                                        if (liNode.FirstChild.InnerText.Trim() == "我的讨论区")
                                         {
-                                            MitbbsBoardLinkMobile boardLink = new MitbbsBoardLinkMobile();
-                                            boardLink.ParentUrl = Url;
-                                            if (boardLink.LoadFromHtml(linkNode))
+                                            var relativeBoardsURL = liNode.FirstChild.Attributes["href"].Value;
+                                            LoadMyBoards(relativeBoardsURL);
+                                        }
+
+                                        IEnumerable<HtmlNode> linkNodes = liNode.Descendants("a");
+
+                                        foreach (HtmlNode linkNode in linkNodes)
+                                        {
+                                            String linkText = HtmlUtilities.GetPlainHtmlText(linkNode.FirstChild.InnerText);
+                                            Debug.WriteLine("link: " + linkText);
+
+                                            if (linkText == "我的邮箱")
                                             {
-                                                MyBoards.Add(MitbbsBoardLink.CreateFromMobileLink(boardLink));
+                                                MailboxUrl = linkNode.Attributes["href"].Value;
+                                                isUserHomeLoaded = true;
+                                            }
+                                            //else if (linkText == "我的讨论区")
+                                            //{
+                                            //    MitbbsBoardLinkMobile boardLink = new MitbbsBoardLinkMobile();
+                                            //    boardLink.ParentUrl = Url;
+                                            //    if (boardLink.LoadFromHtml(linkNode))
+                                            //    {
+                                            //        MyBoards.Add(MitbbsBoardLink.CreateFromMobileLink(boardLink));
+                                            //    }
+                                            //}
+                                            else if (linkText == "我的文章")
+                                            {
+                                                MitbbsSimpleTopicLinkMobile topicLink = new MitbbsSimpleTopicLinkMobile();
+                                                topicLink.ParentUrl = Url;
+                                                if (topicLink.LoadFromHtml(linkNode))
+                                                {
+                                                    MyArticles.Add(MitbbsSimpleTopicLink.CreateFromMobileLink(topicLink));
+                                                }
                                             }
                                         }
-                                        else if (bText == "我的最新文章：")
-                                        {
-                                            MitbbsSimpleTopicLinkMobile topicLink = new MitbbsSimpleTopicLinkMobile();
-                                            topicLink.ParentUrl = Url;
-                                            if (topicLink.LoadFromHtml(linkNode))
-                                            {
-                                                MyArticles.Add(MitbbsSimpleTopicLink.CreateFromMobileLink(topicLink));
-                                            }
-                                        }
                                     }
                                 }
+                                break;
                             }
                         }
                     }
@@ -182,6 +187,43 @@ namespace Naboo.MitbbsReader
             }
 
             return isUserHomeLoaded;
+        }
+
+        private void LoadMyBoards(string relativeBoardsURL)
+        {
+            var url = App.Settings.BuildUrl(MitbbsUserHome.MitbbsMobileUserHomeRootUrl + relativeBoardsURL);
+            //var web = new HtmlWeb();
+            _web.LoadCompleted += OnBoardListLoaded;
+            _web.LoadAsync(url);
+        }
+
+        private void OnBoardListLoaded(object sender, HtmlDocumentLoadCompleted e)
+        {
+            _web.LoadCompleted -= OnBoardListLoaded;
+            if (e.Document != null)
+            {
+                foreach (var node in e.Document.DocumentNode.Descendants("ul"))
+                {
+                    if (node.GetAttributeValue("class", "").Contains("hot_list_wrap"))
+                    {
+                        foreach (var liNode in node.ChildNodes)
+                        {
+                            if (liNode.Name == "li")
+                            {
+                                var boardLink = new MitbbsBoardLinkMobile();
+                                boardLink.ParentUrl = App.Settings.BuildUrl("");
+                                foreach (var aNode in liNode.Descendants("a"))
+                                {
+                                    boardLink.LoadFromHtml(aNode);
+                                    MyBoards.Add(MitbbsBoardLink.CreateFromMobileLink(boardLink));
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+            }
         }
 
         private int CompareBoardNames(String name1, String name2)

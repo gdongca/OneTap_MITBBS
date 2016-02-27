@@ -339,6 +339,31 @@ namespace Naboo.MitbbsReader
 
             return result;
         }
+
+        protected override bool LoadFromLinkNode(HtmlNode linkNode)
+        {
+            String url = linkNode.Attributes["href"].Value;
+
+            if (ParentUrl != null)
+            {
+                Url = HtmlUtilities.GetAbsoluteUrl(ParentUrl, url);
+            }
+            else
+            {
+                Url = url;
+            }
+
+            foreach (var text in linkNode.Descendants("h3"))
+            {
+                if (text.GetAttributeValue("class", "") == "hot_name")
+                {
+                    Name += text.InnerText;
+                    break;
+                }
+            }
+
+            return true;
+        }
     }
 
     public class MitbbsBoardLink : MitbbsBoardLinkBase
