@@ -187,7 +187,7 @@ namespace Naboo.MitbbsReader
                     IEnumerable<HtmlNode> textNodes = args.Document.DocumentNode.Descendants("#text");
                     foreach (HtmlNode textNode in textNodes)
                     {
-                        if (HtmlUtilities.GetPlainHtmlText(textNode.InnerText) == "您已经登录!")
+                        if (HtmlUtilities.GetPlainHtmlText(textNode.InnerText) == "家页")
                         {
                             // Already logged in
                             //
