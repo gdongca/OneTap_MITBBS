@@ -32,7 +32,7 @@ namespace Naboo.MitbbsReader
 
         private String _logInStartPageUrl = "/mwap/home/index.php";
         private String _logInPageUrl = "/mwap/login.php";
-        private String _logOutPageUrl = "/mwap/login.php?ac=logout";
+        private String _logOutPageUrl = "/mwap/logout.php";
 
         private Gb2312Encoding _encoding = new Gb2312Encoding();
         private uint _retries = 0;
